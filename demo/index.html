@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>simpla-ul Demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://v2--simpla.netlify.com/simpla.js"></script>
+    <script>
+      const project = 'rJg5gOnO';
+      const server = 'https://api-beta-xb177olenlgv.netdna-ssl.com';
+      Simpla({
+        project,
+        elements: null,
+        hashTracking: false,
+        _authEndpoint: server,
+        _dataEndpoint: `${server}/projects/${project}/content`
+      });
+      </script>
+
+    <!-- Import Web Components polyfill -->
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <!-- Use shadow DOM if available -->
+    <script>
+      window.Polymer = { dom: 'shadow' };
+    </script>
+
+    <!-- Import component -->
+    <link rel="import" href="../simpla-ul.html">
+
+  </head>
+  <body unresolved>
+	
+  <div class="container">
+
+  <h1> simpla-ul </h1>
+
+    <div id="loginWrapper">
+         <div class="form-group">
+          <label for="email">Email address</label>
+          <input class="form-control" id="email" type="email" placeholder="Email"/>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="form-control" id="password" type="password" placeholder="Password"/>
+        </div>
+        <button class="btn btn-primary" id="login">login</button>
+      </div>
+
+      <hr>
+
+      <button class="btn" id="edit">edit</button>
+      <button class="btn btn-success" id="save">save</button>
+
+      <hr>
+      <ul uid="first-ul" is="simpla-ul">
+          <li> first </li>
+          <li> second </li>
+          <li> third </li>
+      </ul>
+      <hr>
+      <ul uid="second-ul" is="simpla-ul">
+          <li> first </li>
+          <li> second </li>
+          <li> third </li>
+      </ul>
+      <hr>
+      <ul uid="third-ul" is="simpla-ul">
+          <li> first </li>
+          <li> second </li>
+          <li> third </li>
+      </ul>
+
+    </div>  
+
+        <script>
+      // Manage the Simpla environment
+
+      const edit = document.getElementById('edit'),
+            save = document.getElementById('save'),
+            loginWrapper = document.getElementById('loginWrapper'),
+            login = document.getElementById('login');
+
+      let toggleEditButton = (editable) => {
+        edit.innerHTML = editable ? 'enter view mode' : 'enter edit mode';
+      };
+
+      Simpla.observeState('editable', toggleEditButton);
+      toggleEditButton(Simpla.getState().editable);
+
+      edit.addEventListener('click', () => {
+        Simpla.editable(!Simpla.getState().editable);
+      });
+
+      save.addEventListener('click', () => {
+        save.innerHTML = 'saving...';
+        Simpla.save()
+          .then(() => {
+            alert('Saved!');
+            save.innerHTML = 'save';
+          });
+      });
+
+      let authenticatedHandler = (authenticated) => {
+        loginWrapper.hidden = authenticated;
+        save.disabled = !authenticated;
+        edit.disabled = !authenticated;
+      };
+
+      Simpla.observeState('authenticated', authenticatedHandler);
+      authenticatedHandler(Simpla.getState().authenticated);
+
+      login.addEventListener('click', () => {
+        Simpla.login({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        });
+      });
+    </script>
+	
+  </body>
+</html>

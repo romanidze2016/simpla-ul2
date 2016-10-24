@@ -1,0 +1,29 @@
+{
+  "name": "simpla-ul",
+  "version": "0.0.0",
+  "authors": [
+    "Roman Pazinich"
+  ],
+  "description": "Unordered list element for Simpla",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "simpla-ul"
+  ],
+  "main": "simpla-ul.html",
+  "license": "MIT",
+  "homepage": "https://github.com/romanidze2016/simpla-ul",
+  "ignore": [
+    "*",
+    "!*.html",
+    "!LICENSE"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^0.7.14",
+    "polymer": "^1.6.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "^4.0.0"
+  }
+}

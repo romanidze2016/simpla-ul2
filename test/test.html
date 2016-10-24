@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>simpla-ul</title>
+    <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../../test-fixture/test-fixture.html">
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../simpla-ul.html">
+
+    <!-- Setup fixtures -->
+    <script>
+      (function() {
+        window.fixtures = window.fixtures || {};
+        window.fixtures['simpla-ul'] = {};
+      })();
+    </script>
+
+  </head>
+  <body>
+    <test-fixture id="default">
+      <template>
+        <ul is="simpla-ul">
+			<li>first</li>
+			<li>second</li>
+			<li>third</li>
+		</ul>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="editable">
+      <template>
+		<ul is="simpla-ul" editable>
+			<li>first</li>
+			<li>second</li>
+			<li>third</li>
+		</ul>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="active">
+      <template>
+		<ul is="simpla-ul" editable active>
+			<li>first</li>
+			<li>second</li>
+			<li>third</li>
+		</ul>
+      </template>
+    </test-fixture>    
+
+    <script>
+      describe('<simpla-ul>', function() {
+
+        var component,
+            componentFixtures;
+
+        componentFixtures = window.fixtures;
+
+        beforeEach(function() {
+          component = fixture('default');
+        });
+
+        it('is okay', function() {
+          expect(component).to.be.ok;
+        });
+
+        describe('default', function() {
+          it('should be neither editable or active if it is default', function() {
+            var component;
+
+            component = fixture('default');
+            expect(component.editable).to.equal(false);
+            expect(component.active).to.equal(false);
+          })
+        })
+
+        describe('editable', function() {
+          it('should be editable but not active if it has editable attribute', function() {
+            var component;
+
+            component = fixture('editable');
+            expect(component.editable).to.equal(true);
+            expect(component.active).to.equal(false);
+          });
+        });
+
+        describe('active', function() {
+          it('should be editable and active if it has editable and active attributes', function() {
+            var component;
+
+            component = fixture('active');
+            expect(component.editable).to.equal(true);
+            expect(component.active).to.equal(true);
+          });
+        });        
+
+      });
+    </script>
+  </body>
+</html>

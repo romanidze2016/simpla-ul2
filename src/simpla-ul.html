@@ -1,0 +1,86 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="simpla-ul">
+
+<script>
+window.SimplaConnector = {
+    properties: {
+      uid: {
+        type: String,
+        observer: '_observeAndInitUid'
+      }
+    },
+
+    observers: [
+      '_syncInnerToSimpla(inner)'
+    ],
+
+    _syncInnerToSimpla(inner) {
+	  console.log(inner);
+      Simpla.set(this.uid, {
+        type: this.is,
+        data: inner
+      });
+    },
+
+    attached() {
+      this._observeAndInitEditable();
+      this._observeAndInitUid();
+    },
+
+    detached() {
+      // Remove any old observers
+      if (this._unobserveEditable) {
+        this._unobserveEditable();
+      }
+
+      if (this._unobserveUid) {
+        this._unobserveUid();
+      }
+    },
+
+    _observeAndInitEditable() {
+      // Whenever editable in Simpla changes, set this.editable to Simpla's editable
+      //  state
+      let editableChangedHandler = (editable) => {
+        this.editable = editable;
+      };
+
+      // Give handler to Simpla observe
+      this._unobserveEditable = Simpla.observeState('editable', editableChangedHandler);
+
+      // Call handler with current value
+      editableChangedHandler(Simpla.getState().editable);
+    },
+
+    _observeAndInitUid() {
+      // Stop old observer by calling stored unobserve function
+      if (this._unobserveUid) {
+        this._unobserveUid();
+      }
+
+      // If this.uid is unset, we don't want to bother observing it
+      if (!this.uid) {
+        return;
+      }
+
+      // Our value is just the data at our UID in the internal state
+      //  this observes the internal state and updates our markdown value
+      //  anytime it changes
+      this._unobserveUid = Simpla.observe(this.uid, ({ data }) => {
+        this.inner = data;
+      });
+
+      // This forces Simpla to get the first value of the current uid
+      Simpla.get(this.uid);
+    }
+};
+</script>
+  <template>
+    <link rel="stylesheet" href="./simpla-ul.css" inline>
+
+	  <content></content>
+  </template>
+
+  <script src="./simpla-ul.js" inline></script>
+</dom-module>
