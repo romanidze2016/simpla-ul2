@@ -27,7 +27,7 @@ Note for cross-browser support you should also include the [Web Components Polyf
 
 --
 
-MIT © Roman Pazinich
+USYD © Roman Pazinich
 
 [webcomponents]: https://github.com/webcomponents/webcomponentsjs
 
