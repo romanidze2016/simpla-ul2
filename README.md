@@ -1,7 +1,6 @@
 # simpla-ul
-[![Build status][travis-badge]][travis-url] [![Bower dependencies][bowerdeps-badge]][bowerdeps-url] ![Version][bower-badge]
 
-Unordered list element for Simpla
+This is one of the most challenging projects I worked on at the university. Me and my other two group members were given a task by a start-up company called Simpla. Our task was to create three custom HTML elements from scratch: simpla-video, simpla-ul (unordered list) and simpla-ol (ordered list). My responsibilities were to develop the element simpla-ul as well as to fix all the bugs the elements had. The project was a good experience of working with people in the industry as well as a good incentive to learn new technologies like polymer and web components.
 
 ### Installation & usage
 
